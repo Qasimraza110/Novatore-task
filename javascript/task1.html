@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD op</title>
+  </head>
+  <body>
+    <h1>CRUD Operations</h1>
+    <p>This page will demonstrate basic CRUD operations.</p>
+
+    <input type="text" id="name" placeholder="Enter name" /><br />
+    <input type="text" id="age" placeholder="Enter age" /><br />
+    <br />
+    <button onclick="add()" style="display:inline;" id="addBtn">ADD</button>
+    <button onclick="updateRow()" style="display:none;" id="updateBtn">UPDATE</button>
+
+    <table id="table">
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>OP</th>
+      </tr>
+    </table>
+
+    <script>
+      let editRow = null;
+
+      function add() {
+        let name = document.getElementById("name").value.trim();
+        let age = document.getElementById("age").value.trim();
+
+        if (name === "") {
+          alert("Enter a name");
+          return;
+        }
+        if (age === "") {
+          alert("Enter an age");
+          return;
+        }
+        if (isNaN(age)) {
+          alert("Age must be a number");
+          return;
+        }
+
+        let table = document.getElementById("table");
+        let row = table.insertRow();
+        row.insertCell(0).innerHTML = name;
+        row.insertCell(1).innerHTML = age;
+        row.insertCell(2).innerHTML = `
+          <button onclick="edit(this)">Edit</button>
+          <button onclick="removeRow(this)">Delete</button>
+        `;
+
+         document.getElementById("name").value = "";
+        document.getElementById("age").value = "";
+      }
+
+      function removeRow(button) {
+        let row = button.closest("tr");
+        row.remove();
+      }
+
+      function edit(button) {
+        editRow = button.closest("tr"); 
+        document.getElementById("name").value = editRow.cells[0].innerText;
+        document.getElementById("age").value = editRow.cells[1].innerText;
+
+        document.getElementById("updateBtn").style.display = "inline"; 
+        document.getElementById("addBtn").style.display = "none";
+      }
+
+      function updateRow() {
+        let name = document.getElementById("name").value;
+        let age = document.getElementById("age").value;
+
+        if (name === "") {
+          alert("Enter a name");
+          return;
+        }
+        if (age === "" || isNaN(age)) {
+          alert("Age must be a valid number");
+          return;
+        }
+
+        
+        editRow.cells[0].innerText = name;
+        editRow.cells[1].innerText = age;
+
+        document.getElementById("name").value = "";
+        document.getElementById("age").value = "";
+
+        document.getElementById("updateBtn").style.display = "none";
+        document.getElementById("addBtn").style.display = "inline";
+        editRow ="";
+      }
+
+      
+    </script>
+  </body>
+</html>

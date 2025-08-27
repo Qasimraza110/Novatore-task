@@ -1,0 +1,117 @@
+samjh gya bhai 👌 tum keh rahe ho JavaScript ke **important / common functions** ka ek proper list chahiye (array, string, object, math, etc. ke), taki tumhe overall idea ho k JavaScript mn kya-kya hota hai.
+
+JavaScript mn *bohot* saare built-in methods (functions) hain, mai tumhe categories mn divide kr k likhta hun:
+
+---
+
+## 🔹 1. Array Functions
+
+Arrays ke liye sabse zyada use hote hain:
+
+* `push()` → end mn element add
+* `pop()` → end se element remove
+* `shift()` → start se element remove
+* `unshift()` → start mn element add
+* `concat()` → arrays combine
+* `join()` → array ko string mn badalna
+* `slice()` → array ka part copy karna
+* `splice()` → array se add/remove/update
+* `indexOf()` → value ka index find
+* `includes()` → check value exist or not
+* `find()` → first element jo condition match kare
+* `findIndex()` → index of first match
+* `filter()` → condition k hisaab se new array 
+* `map()` → har element par function apply karke new array
+* `forEach()` → har element par loop
+* `reduce()` → array ko single value mn reduce karna
+* `some()` → check agar koi element condition pass karta ho
+* `every()` → check agar sabhi condition pass karte ho
+* `sort()` → sorting
+* `reverse()` → reverse array
+
+---
+
+## 🔹 2. String Functions
+
+Strings ke liye:
+
+* `charAt()` → specific character
+* `charCodeAt()` → character ka ASCII code
+* `concat()` → strings join
+* `includes()` → substring exist ya nahi
+* `indexOf()` → substring ka position
+* `lastIndexOf()` → last position of substring
+* `slice()` → part of string
+* `substring()` → substring extract
+* `substr()` → (old method) substring extract
+* `split()` → string ko array mn todna
+* `replace()` → replace text
+* `replaceAll()` → replace all matches
+* `toLowerCase()` → small letters
+* `toUpperCase()` → capital letters
+* `trim()` → spaces hatana (start + end)
+* `startsWith()` → check start
+* `endsWith()` → check end
+* `repeat()` → repeat string
+
+---
+
+## 🔹 3. Object Functions
+
+* `Object.keys(obj)` → saare keys array mn
+* `Object.values(obj)` → saare values array mn
+* `Object.entries(obj)` → key-value pairs array
+* `Object.assign(target, source)` → merge objects
+* `Object.freeze(obj)` → object ko freeze (changes ni)
+* `Object.seal(obj)` → new props add/remove ni, lekin modify possible
+* `Object.hasOwn(obj, key)` → check property exist
+
+---
+
+## 🔹 4. Math Functions
+
+* `Math.abs()` → absolute value
+* `Math.round()` → round off
+* `Math.ceil()` → upar round
+* `Math.floor()` → neeche round
+* `Math.max()` → max value
+* `Math.min()` → min value
+* `Math.random()` → random number (0–1)
+* `Math.pow(a, b)` → power (a^b)
+* `Math.sqrt()` → square root
+
+---
+
+## 🔹 5. Date Functions
+
+* `new Date()` → current date/time
+* `getFullYear()` → year lena
+* `getMonth()` → month (0–11)
+* `getDate()` → day of month
+* `getDay()` → week ka day (0–6)
+* `getHours(), getMinutes(), getSeconds()`
+* `setFullYear(), setMonth(), setDate(), ...` (update krna)
+
+---
+
+## 🔹 6. Utility Functions
+
+* `setTimeout(fn, ms)` → delay k baad run
+* `setInterval(fn, ms)` → bar-bar run
+* `clearTimeout()` / `clearInterval()` → stop timers
+* `isNaN()` → check NaN
+* `parseInt()` → string → integer
+* `parseFloat()` → string → float
+* `Number()` → string → number
+* `String()` → number → string
+* `JSON.stringify(obj)` → object → JSON string
+* `JSON.parse(string)` → JSON string → object
+
+---
+
+👉 ye to **sabse zyada use hone wale** functions/methods ka list hai.
+JavaScript mn aur bhi bohot saare hain (Intl API, Map/Set methods, Promise methods, etc.)
+
+---
+
+Batao, kya mai tumhe **ek ek category ka proper cheat sheet with examples** bana k du (jaise Array methods full examples ek jagah)?

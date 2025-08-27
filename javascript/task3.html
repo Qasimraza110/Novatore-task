@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>landing page</title>
+</head>
+<style>
+    body {
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+ position: fixed;
+  overflow: auto;
+  top: 0;
+  width: 100%;
+  background: #747272;
+  padding: 10px ;
+  
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+nav ul li {
+  margin: 13px;
+}
+nav ul li a {
+  color: #beb9b9;
+  text-decoration: none;
+  font-size: 28px;
+  transition: 0.3s;
+}
+nav ul li a.active{
+  color: #000000;
+  border-bottom: 2px solid #000000;
+}
+nav ul li a:hover{
+  background-color: #ffffff;
+  border-radius: 1px;
+}
+
+section{
+  height: 700px;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: white;
+}
+#home { background: #3498db; }
+#about { background: #9b59b6; }
+#services { background: #e67e22; }
+#contact { background: #2ecc71; }
+#category { background: #f1c40f; }
+#sale { background: #e74c3c; }
+#reviews  { background: #1abc9c; }
+#mens   { background: #8e44ad; }
+#sellers { background: #34495e; }
+#products { background: #f39c12; }
+#food   { background: #c0392b; }
+#vouchers { background: #d35400; }
+
+</style>
+<body>
+    
+  <nav>
+    <ul>
+      <li><a class="horizontal-item" href="#home" >Home</a></li>
+      <li><a class="horizontal-item" href="#about">About</a></li>
+      <li><a class="horizontal-item" href="#services">Services</a></li>
+      <li><a class="horizontal-item" href="#contact">Contact</a></li>
+      <li><a class="horizontal-item" href="#category" >category</a></li>
+      <li><a class="horizontal-item" href="#sale">sale</a></li>
+      <li><a class="horizontal-item" href="#reviews">reviews</a></li>
+      <li><a class="horizontal-item" href="#mens">Owner</a></li>
+      <li><a class="horizontal-item" href="#sellers" >sellers</a></li>
+      <li><a class="horizontal-item" href="#products">products</a></li>
+      <li><a class="horizontal-item" href="#food">food</a></li>
+      <li><a class="horizontal-item" href="#vouchers">vouchers</a></li>
+    </ul>
+  </nav>
+ 
+  <section id="home"  class="horizontal-item">Home Section</section>
+  <section id="about" class="horizontal-item">About Section</section>
+  <section id="services" class="horizontal-item">Services Section</section>
+  <section id="contact" class="horizontal-item">Contact Section</section> 
+  <section id="category" class="horizontal-item">category Section</section>
+  <section id="sale" class="horizontal-item">sale Section</section>
+  <section id="reviews" class="horizontal-item">reviews Section</section>
+  <section id="mens" class="horizontal-item">mens products Section</section> 
+  <section id="sellers" class="horizontal-item">sellers Section</section>
+  <section id="products" class="horizontal-item">products Section</section>
+  <section id="food" class="horizontal-item">food Section</section>
+  <section id="vouchers" class="horizontal-item">vouchers Section</section> 
+
+ 
+
+  <script>
+    
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav ul li a");
+ const navbar   = document.querySelector("nav");
+
+
+//e used for targeting te section 
+//api intersection observer is used to observe
+
+const landing = new IntersectionObserver((e) => {
+  e.forEach(page=> {
+
+    if (page.isIntersecting) {
+      for (let i = 0; i < navLinks.length; i++) {
+         navLinks[i].classList.remove("active");
+             }
+     document.querySelector(`nav a[href="#${page.target.id}"]`).classList.add("active");
+    }
+  });
+},
+  {
+    //top level root
+    root: null,
+    //0.6 = 60per means when page is 60 percentage in appear
+    threshold: 0.7
+});
+
+for(let scroll of sections){
+  landing.observe(scroll);
+}
+
+
+
+  </script>
+</body>
+</html>
