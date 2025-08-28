@@ -1,0 +1,1 @@
+basic ecoom in react vite and use redux 
