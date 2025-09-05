@@ -1,0 +1,309 @@
+## 1️⃣ SQL Indexing (Deep Dive)
+
+### What is Indexing?
+
+* An index is a database structure that improves data retrieval speed.
+* Think of it like an index in a book: you don’t read the whole book to find a topic—you go to the index.
+
+### Types of Indexes:
+
+1. Clustered Index
+
+   * Sorts the actual table rows.
+   * Each table can have only one clustered index.
+   * Example: Primary Key is often a clustered index.
+
+   ```sql
+   CREATE TABLE Employees (
+       ID INT PRIMARY KEY, -- automatically clustered
+       Name VARCHAR(50)
+   );
+   ```
+
+2. Non-Clustered Index
+
+   * Creates a separate structure pointing to the table rows.
+   * Can have multiple non-clustered indexes.
+
+   ```sql
+   CREATE INDEX idx_name ON Employees(Name);
+   ```
+
+3. Unique Index
+
+   * Prevents duplicate values.
+
+   ```sql
+   CREATE UNIQUE INDEX idx_email ON Employees(Email);
+   ```
+
+4. Composite Index
+
+   * Index on multiple columns.
+
+   ```sql
+   CREATE INDEX idx_name_salary ON Employees(Name, Salary);
+   ```
+
+### Best Practices
+
+* Index columns used in WHERE, JOIN, ORDER BY.
+* Avoid over-indexing; it slows down INSERT/UPDATE/DELETE.
+
+---
+
+## 2️⃣ SQL Joins (Deep Dive)
+
+### Types & Examples
+
+1. INNER JOIN – Only matches present in both tables.
+
+```sql
+SELECT Customers.Name, Orders.OrderID
+FROM Customers
+INNER JOIN Orders
+ON Customers.ID = Orders.CustomerID;
+```
+
+2. LEFT JOIN (LEFT OUTER JOIN) – All left table plus matched right table rows.
+
+```sql
+SELECT Customers.Name, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders
+ON Customers.ID = Orders.CustomerID;
+```
+
+3. RIGHT JOIN (RIGHT OUTER JOIN) – All right table plus matched left table rows.
+
+```sql
+SELECT Customers.Name, Orders.OrderID
+FROM Customers
+RIGHT JOIN Orders
+ON Customers.ID = Orders.CustomerID;
+```
+
+4. FULL OUTER JOIN – All rows from both tables, NULL where no match.
+
+```sql
+SELECT Customers.Name, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders
+ON Customers.ID = Orders.CustomerID;
+```
+
+5. SELF JOIN – Join table with itself.
+
+```sql
+SELECT A.Name AS Employee, B.Name AS Manager
+FROM Employees A
+LEFT JOIN Employees B
+ON A.ManagerID = B.ID;
+```
+
+---
+
+## 3️⃣ SQL Normalization (Deep Dive)
+
+### Purpose
+
+* Reduce data redundancy.
+* Improve data integrity.
+
+### Forms
+
+1. 1NF: Each column should contain atomic values.
+
+```sql
+-- Bad
+Student (ID, Name, Subjects) -- Subjects = "Math, Physics"
+
+-- Good
+Student (ID, Name)
+StudentSubjects (ID, Subject)
+```
+
+2. 2NF: 1NF plus No partial dependency. Columns must depend on whole primary key, not part.
+
+```sql
+-- Bad
+OrderDetails(OrderID, ProductID, ProductName, Quantity)
+
+-- Good
+Orders(OrderID, CustomerID)
+Products(ProductID, ProductName)
+OrderDetails(OrderID, ProductID, Quantity)
+```
+
+3. 3NF: 2NF plus No transitive dependency.
+
+```sql
+-- Bad
+Employee(EmpID, Name, DeptID, DeptName)
+
+-- Good
+Employee(EmpID, Name, DeptID)
+Department(DeptID, DeptName)
+```
+
+---
+
+## 4️⃣ SQL Procedures (Stored Procedures)
+
+### What
+
+* Predefined SQL queries stored in DB.
+* Can accept parameters, perform logic, return data.
+
+### Benefits
+
+* Reuse queries.
+* Improve performance.
+* Security: Users don’t need direct table access.
+
+### Example
+
+```sql
+CREATE PROCEDURE GetOrdersByCustomer
+    @CustomerID INT
+AS
+BEGIN
+    SELECT * FROM Orders
+    WHERE CustomerID = @CustomerID;
+END;
+
+-- Execute
+EXEC GetOrdersByCustomer 3;
+```
+
+### Advanced
+
+* Can include IF/ELSE, loops, transactions.
+
+---
+
+## 5️⃣ SQL Nested Queries (Subqueries)
+
+* Definition: Query inside a query.
+* Can be in SELECT, WHERE, FROM.
+
+### Example
+
+```sql
+-- Customers who ordered more than 5 items
+SELECT Name
+FROM Customers
+WHERE ID IN (
+    SELECT CustomerID
+    FROM Orders
+    GROUP BY CustomerID
+    HAVING SUM(Quantity) > 5
+);
+```
+
+* Correlated Subquery: Refers to outer query.
+
+```sql
+SELECT Name
+FROM Customers C
+WHERE EXISTS (
+    SELECT 1
+    FROM Orders O
+    WHERE O.CustomerID = C.ID
+    AND O.Amount > 100
+);
+```
+
+---
+
+## 6️⃣ LIKE Operator (Pattern Matching)
+
+* % → any sequence of characters
+* \_ → single character
+
+```sql
+SELECT * FROM Customers WHERE Name LIKE 'A%'; -- Starts with A
+SELECT * FROM Customers WHERE Name LIKE '%n'; -- Ends with n
+SELECT * FROM Customers WHERE Name LIKE '_li'; -- Any char + 'li'
+SELECT * FROM Customers WHERE Name LIKE '%li%'; -- Contains 'li'
+```
+
+---
+
+## 7️⃣ Aggregate Functions
+
+| Function | Description       |
+| -------- | ----------------- |
+| COUNT()  | Count rows        |
+| SUM()    | Sum of values     |
+| AVG()    | Average of values |
+| MAX()    | Maximum value     |
+| MIN()    | Minimum value     |
+
+### Examples
+
+```sql
+SELECT COUNT(*) AS TotalCustomers FROM Customers;
+SELECT SUM(Amount) AS TotalSales FROM Orders;
+SELECT AVG(Salary) AS AvgSalary FROM Employees;
+SELECT MAX(Price), MIN(Price) FROM Products;
+```
+
+### With GROUP BY
+
+```sql
+SELECT Department, AVG(Salary) AS AvgSalary
+FROM Employees
+GROUP BY Department;
+```
+
+---
+
+# Node.js IN DEPTH
+
+---
+
+## 1️⃣ Queues
+
+* What: FIFO structure for tasks.
+* Use Cases: Email sending, job scheduling, notifications.
+
+### Example with Bull
+
+```js
+import Queue from "bull";
+const emailQueue = new Queue("email");
+
+emailQueue.add({ to: "test@gmail.com", subject: "Hello!" });
+
+emailQueue.process(async (job) => {
+    console.log(`Sending email to ${job.data.to}`);
+});
+```
+
+* Features: Retry, Delayed jobs, Priorities.
+
+---
+
+## 2️⃣ Caching with Redis
+
+* Why: Speed up data retrieval, reduce DB load.
+* Use cases: Session storage, popular queries, API caching.
+
+### Basic Example
+
+```js
+import redis from "redis";
+const client = redis.createClient();
+
+client.on("connect", () => console.log("Redis connected"));
+
+// Store data
+client.set("user:1", JSON.stringify({ id: 1, name: "Ali" }), 'EX', 3600); // expires in 1 hour
+
+// Get data
+client.get("user:1", (err, data) => {
+    console.log(JSON.parse(data));
+});
+```
+
